@@ -64,6 +64,43 @@ Custom CSS animations defined in `index.css`:
 
 The application demonstrates React state management using the **map, filter, and array manipulation paradigm**:
 
+## ⚡ React Performance Optimization with `useRef`
+
+In addition to standard state management with `useState`, this project intentionally uses **`useRef` for form handling** in order to **avoid unnecessary re-rendering** and align with React performance best practices.
+
+### Why `useRef` instead of `useState` for Forms
+
+In React, updating state with `useState` triggers a component re-render.  
+For simple forms where input values are only needed **on submit**, re-rendering on every keystroke is unnecessary.
+
+To optimize this, the project uses **uncontrolled inputs backed by `useRef`**:
+
+- Input values are stored in a mutable ref object
+- Typing does **not trigger re-renders**
+- Values are read only when submitting or cancelling the form
+
+This approach improves performance and keeps the UI responsive, especially as the component tree grows.
+
+### Example: Project Creation Form (`ProjectCreation.jsx`)
+
+```jsx
+const projectRef = useRef({
+  id: uuidv4(),
+  name: "",
+  description: "",
+  date: "",
+});
+
+const handleChange = (e) => {
+  projectRef.current[e.target.name] = e.target.value;
+};
+
+const handleSubmit = (e) => {
+  e.preventDefault();
+  addProject(projectRef.current);
+};
+```
+
 ### State Structure
 
 **Main App State** (`App.jsx`):
