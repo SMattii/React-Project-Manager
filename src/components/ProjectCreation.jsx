@@ -1,11 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import ProjectCreationButtons from "./ProjectCreationButtons";
 import ProjectCreationForm from "./ProjectCreationForm";
 import { v4 as uuidv4 } from 'uuid';
 
 function ProjectCreation({ addProject, setCreatingProjectState }) {
+    console.count("ProjectCreation render");
 
-    const [project, setProject] = useState({
+    const projectRef = useRef({
         id: uuidv4(),
         name: "",
         description: "",
@@ -13,25 +14,40 @@ function ProjectCreation({ addProject, setCreatingProjectState }) {
     });
 
     const handleChange = (e) => {
-        setProject({
-            ...project,
-            [e.target.name]: e.target.value,
-        });
+        projectRef.current[e.target.name] = e.target.value;
     };
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        project.name != "" && project.description != "" && project.date != "" ? addProject(project) : alert("Please fill in all fields");
-        setCreatingProjectState(false);
-    };
 
-    const handleCancel = (e) => {
-        e.preventDefault();
-        setProject({
+        const { name, description, date } = projectRef.current;
+
+        if (!name || !description || !date) {
+            alert("Please fill in all fields");
+            return;
+        }
+
+        addProject(projectRef.current);
+
+        projectRef.current = {
+            id: uuidv4(),
             name: "",
             description: "",
             date: "",
-        });
+        };
+
+        setCreatingProjectState(false);
+    };
+
+
+    const handleCancel = (e) => {
+        e.preventDefault();
+        projectRef.current = {
+            id: uuidv4(),
+            name: "",
+            description: "",
+            date: "",
+        };
         setCreatingProjectState(false);
     };
 

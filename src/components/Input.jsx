@@ -20,27 +20,30 @@ function AnimatedLabel({ text }) {
 
 function Input({ label = "Label", placeholder = "Placeholder", type = "text", ...props }) {
     return (
-        <div className="flex flex-col gap-2 group">
+        <div className="group flex flex-col gap-2">
             <AnimatedLabel text={label} />
 
             <input
                 type={type}
-                placeholder="Enter project name"
+                placeholder={placeholder}
                 className="
-      w-full px-4 py-2
-      bg-white text-black
-      border-2 border-black rounded-md
-      placeholder:text-gray-400
-      focus:outline-none focus:bg-gray-100
-      transition-shadow duration-200
-      hover:shadow-[0_0_0_3px_black]
-      focus:shadow-[0_0_0_3px_black]
-    "
+          w-full rounded-md
+          border-2 border-black
+          bg-white px-4 py-2 text-black
+          placeholder:text-gray-400
+
+          focus:outline-none focus:bg-gray-100
+          transition-shadow duration-300
+
+          hover:shadow-[0_0_16px_4px_rgba(0,0,0,0.6)]
+          focus:shadow-[0_0_22px_6px_rgba(0,0,0,0.75)]
+
+
+
+        "
                 {...props}
             />
         </div>
-
-
     );
 }
 
