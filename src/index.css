@@ -1,0 +1,32 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.label-char {
+    display: inline-block;
+    font-weight: 500;
+    transform: scale(1);
+    will-change: transform;
+}
+
+.group:hover .label-char,
+.group:focus-within .label-char {
+    animation: label-wave 0.14s ease-out both;
+}
+
+@keyframes label-wave {
+    0% {
+        font-weight: 500;
+        transform: scale(1);
+    }
+
+    45% {
+        font-weight: 800;
+        transform: scale(1.5);
+    }
+
+    100% {
+        font-weight: 500;
+        transform: scale(1);
+    }
+}
